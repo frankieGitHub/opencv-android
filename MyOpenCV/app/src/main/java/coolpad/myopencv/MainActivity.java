@@ -80,21 +80,26 @@ public class MainActivity extends AppCompatActivity {
         MatOfDouble m = new MatOfDouble();
         MatOfDouble s = new MatOfDouble();
 
-        srcBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.test3);
+        srcBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.clear_220_220_new);
         grayBitmap = Bitmap.createBitmap(srcBitmap.getWidth(), srcBitmap.getHeight(), Bitmap.Config.RGB_565);
         Utils.bitmapToMat(srcBitmap, rgbMat);//convert original bitmap to Mat, R G B.
+
+        long time1 = System.currentTimeMillis();
         Imgproc.Laplacian(rgbMat, grayMat, -1, 3, 1, 0, Core.BORDER_DEFAULT);
         Core.meanStdDev(grayMat, m, s);
 
         double mm = m.get(0,0)[0];
         double ss = s.get(0,0)[0];
-
+        long take_time = System.currentTimeMillis() - time1;
 
 
 //        int d = 10;
         //Imgproc.cvtColor(rgbMat, grayMat, Imgproc.COLOR_RGB2GRAY);//rgbMat to gray grayMat
         Utils.matToBitmap(grayMat, grayBitmap); //convert mat to bitmap
+
         Log.i(TAG, "std is:..." + ss);
+        String  str=String.valueOf(take_time);
+        Log.i(TAG, str);
 //        System.out.println("aaa %lf", ss);
     }
 
